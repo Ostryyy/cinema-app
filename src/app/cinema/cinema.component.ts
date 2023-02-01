@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
@@ -13,7 +14,7 @@ export class CinemaComponent implements OnInit, OnDestroy {
   private userSub!: Subscription;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService, private router: Router, private route: ActivatedRoute
   ) {}
 
   ngOnInit() {

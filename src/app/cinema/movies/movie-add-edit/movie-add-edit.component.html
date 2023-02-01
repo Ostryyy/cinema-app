@@ -1,0 +1,90 @@
+<form #addOrEditForm="ngForm" (submit)="onSubmit(addOrEditForm)">
+  <div class="row AddOreditComponentButtons" style="margin-top: 10px">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="!addOrEditForm.valid"
+      >
+        {{ editMode ? "Update" : "Save" }}
+      </button>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <button type="button" class="btn btn-danger" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px">
+    <div class="col-lg-4 col-md-4 col-sm-12" style="text-align: center">
+      <div class="img-movie-holder">
+        <img [src]="imagePath.value" [alt]="title" *ngIf="imagePath.value"/>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12" style="margin-top: 5px">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              class="form-control"
+              ngModel="{{movie?.title}}"
+              required
+              #title
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="director">Director</label>
+            <input
+              type="text"
+              id="director"
+              name="director"
+              class="form-control"
+              ngModel="{{movie?.director}}"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <input
+              type="text"
+              id="imagePath"
+              name="imagePath"
+              class="form-control"
+              ngModel="{{movie?.imagePath}}"
+              #imagePath
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              type="text"
+              id="description"
+              name="description"
+              class="form-control"
+              rows="6"
+              ngModel="{{movie?.description}}"
+              required
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

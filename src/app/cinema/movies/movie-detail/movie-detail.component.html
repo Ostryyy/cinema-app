@@ -1,0 +1,42 @@
+<div class="row" style="margin-top: 10px">
+  <div class="col-12">
+    <button
+      class="btn btn-danger"
+      routerLink="/cinema/movies"
+      style="width: 100%"
+    >
+      Back
+    </button>
+  </div>
+</div>
+<div class="row" style="margin-top: 10px">
+  <div class="col-lg-4 col-md-4 col-sm-12" style="text-align: center">
+    <div class="img-movie-holder">
+      <img [src]="movie?.imagePath" [alt]="movie?.title" />
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      style="width: 100%; margin-top: 10px"
+    >
+      Book
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      style="width: 100%; margin-top: 5px"
+      (click)="onEditMovie()"
+    >
+      Edit
+    </button>
+  </div>
+  <div class="col-lg-8 col-md-8 col-sm-12" style="margin-top: 5px">
+    <p style="font-size: 24px">
+      <span class="fw-bold">Title: </span>"{{ movie?.title }}"
+    </p>
+    <p class="fw-bold" style="font-size: 24px">Director:</p>
+    <p>{{ movie?.director }}</p>
+    <p class="fw-bold" style="font-size: 24px">Description:</p>
+    <p>{{ movie?.description }}</p>
+  </div>
+</div>
