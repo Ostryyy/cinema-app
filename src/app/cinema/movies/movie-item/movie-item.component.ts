@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Movie } from '../movie.model';
 import { MovieService } from '../movie.service';
@@ -9,44 +10,25 @@ import { MovieService } from '../movie.service';
   templateUrl: './movie-item.component.html',
   styleUrls: ['./movie-item.component.scss'],
 })
-export class MovieItemComponent implements OnInit {
+export class MovieItemComponent implements OnInit, OnDestroy {
   movies?: Movie[];
+  subscription?: Subscription;
 
   constructor(
     private movieService: MovieService,
-    private dataStorageService: DataStorageService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dataStorage: DataStorageService
   ) {}
 
   ngOnInit() {
-    this.onGetMovies()
-  }
-
-  onGetMovies() {
-    this.dataStorageService.fetchMovies().subscribe(
-      (movies) => {
-        const data = JSON.stringify(movies);
-        this.movies = JSON.parse(data);
-
-        this.movieService.movies = this.movies!;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-  }
-
-  onSaveMovies() {
-    this.dataStorageService.saveMovies(this.movies!).subscribe(
-      (movies) => {
-        const data = JSON.stringify(movies);
-        this.movies = JSON.parse(data);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.subscription = this.movieService.moviesChanged
+      .subscribe(
+        (movies: Movie[]) => {
+          this.movies = movies;
+        }
+      );
+    this.movies = this.movieService.getMovies();
   }
 
   onAddMovie() {
@@ -55,6 +37,9 @@ export class MovieItemComponent implements OnInit {
 
   onDelete(index: number) {
     this.movieService.deleteMovie(index);
-    this.onSaveMovies();
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }
