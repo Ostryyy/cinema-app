@@ -6,6 +6,7 @@ import { CinemaComponent } from './cinema/cinema.component';
 import { MovieAddEditComponent } from './cinema/movies/movie-add-edit/movie-add-edit.component';
 import { MovieDetailComponent } from './cinema/movies/movie-detail/movie-detail.component';
 import { MoviesComponent } from './cinema/movies/movies.component';
+import { MoviesResolver } from './cinema/movies/movies.resolver';
 import { ReservationsComponent } from './cinema/reservations/reservations.component';
 
 const routes: Routes = [
@@ -14,10 +15,10 @@ const routes: Routes = [
     component: CinemaComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'movies', component: MoviesComponent },
-      { path: 'movies/movie/detail/:id', component: MovieDetailComponent },
-      { path: 'movies/add', component: MovieAddEditComponent},
-      { path: 'movies/movie/detail/:id/edit', component: MovieAddEditComponent},
+      { path: 'movies', component: MoviesComponent, resolve: [MoviesResolver] },
+      { path: 'movies/movie/detail/:id', component: MovieDetailComponent, resolve: [MoviesResolver] },
+      { path: 'movies/add', component: MovieAddEditComponent, resolve: [MoviesResolver]},
+      { path: 'movies/movie/detail/:id/edit', component: MovieAddEditComponent, resolve: [MoviesResolver]},
       { path: 'reservations', component: ReservationsComponent },
     ],
   },
